@@ -27,12 +27,24 @@ public web service that calls a paid AI API and third-party data providers.
 ## 4. HTTP security headers (`next.config.mjs`)
 Applied to every route:
 - `Content-Security-Policy` restricting `script/style/img/font/connect` sources;
-  `connect-src` is allow-listed to the Open-Meteo endpoints only.
+  `connect-src` is allow-listed to the Open-Meteo endpoints only (dev adds the
+  HMR websocket + `unsafe-eval` that Next requires locally; production is strict).
+- `Strict-Transport-Security: max-age=63072000; includeSubDomains; preload` (HSTS)
 - `X-Content-Type-Options: nosniff`
 - `X-Frame-Options: DENY` + `frame-ancestors 'none'` (clickjacking defence)
+- `Cross-Origin-Opener-Policy: same-origin`
+- `X-DNS-Prefetch-Control: off`
 - `Referrer-Policy: strict-origin-when-cross-origin`
 - `Permissions-Policy` disabling camera/mic/payment; geolocation self-only.
 - `poweredByHeader: false` removes the `X-Powered-By` fingerprint.
+
+## 4a. Rate limiting (`middleware.ts`)
+Edge middleware applies a per-IP fixed-window limiter to every `/api/*` route:
+60 requests/minute by default, and a stricter **20/minute for `/api/plan`**
+because that path spends Gemini quota. Over-limit requests get `429` with a
+`Retry-After` header. The counter is per runtime instance (exact on a single
+instance; best-effort on serverless) and would be backed by a shared store
+(e.g. Upstash Redis) for a multi-instance production fleet.
 
 ## 5. Output safety from the LLM
 - Gemini is constrained to a **JSON response schema**; the output is parsed and
@@ -52,6 +64,8 @@ Applied to every route:
   toolchain) and do not reach the runtime bundle. Re-check with `npm audit`.
 
 ## Known residual risks
-- Public endpoints have no per-IP rate limiting in this build; on Vercel this is
-  mitigated by platform protections, and a middleware limiter is the natural next
-  step for production.
+- The rate limiter's counter is in-memory and per-instance; a multi-instance
+  serverless deployment should back it with a shared store (e.g. Upstash Redis)
+  for a globally exact limit. Vercel platform protections apply in the meantime.
+- A nonce-based CSP would let us drop `'unsafe-inline'` for scripts entirely; it
+  is the natural next hardening step.

@@ -111,6 +111,7 @@ dedicated docs:
 - [`docs/PROBLEM_ALIGNMENT.md`](docs/PROBLEM_ALIGNMENT.md) — requirement traceability
 - [`docs/METHODOLOGY.md`](docs/METHODOLOGY.md) — every formula + citation
 - [`docs/CODE_QUALITY.md`](docs/CODE_QUALITY.md) — tooling, strictness, CI gate
+- [`docs/TESTING.md`](docs/TESTING.md) — test suites and approach
 - [`docs/SECURITY.md`](docs/SECURITY.md) — defense-in-depth measures
 - [`docs/ACCESSIBILITY.md`](docs/ACCESSIBILITY.md) — WCAG 2.2 AA notes
 - [`BLOG.md`](BLOG.md) — the build narrative (dual-submission)
