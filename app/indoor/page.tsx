@@ -35,7 +35,12 @@ export default function IndoorPage() {
 
   const outdoor = air?.pollutants.pm2_5 ?? 150;
   const volume = Math.max(area * height, 1);
-  const model = indoorPm25({ outdoorPm25: outdoor, roomVolumeM3: volume, purifierCadr: cadr, windowsOpen });
+  const model = indoorPm25({
+    outdoorPm25: outdoor,
+    roomVolumeM3: volume,
+    purifierCadr: cadr,
+    windowsOpen,
+  });
   const ventilationGood = (air?.aqi.index ?? 400) <= 100;
 
   return (
@@ -54,25 +59,52 @@ export default function IndoorPage() {
               <label className="label" htmlFor="area">
                 Floor area: {area} m²
               </label>
-              <input id="area" type="range" min={4} max={60} value={area} className="w-full"
-                onChange={(e) => setArea(Number(e.target.value))} />
+              <input
+                id="area"
+                type="range"
+                min={4}
+                max={60}
+                value={area}
+                className="w-full"
+                onChange={(e) => setArea(Number(e.target.value))}
+              />
             </div>
             <div>
               <label className="label" htmlFor="height">
                 Ceiling height: {height} m
               </label>
-              <input id="height" type="range" min={2} max={5} step={0.5} value={height} className="w-full"
-                onChange={(e) => setHeight(Number(e.target.value))} />
+              <input
+                id="height"
+                type="range"
+                min={2}
+                max={5}
+                step={0.5}
+                value={height}
+                className="w-full"
+                onChange={(e) => setHeight(Number(e.target.value))}
+              />
             </div>
             <div>
               <label className="label" htmlFor="cadr">
                 Purifier clean-air rate (CADR): {cadr} m³/h
               </label>
-              <input id="cadr" type="range" min={0} max={600} step={10} value={cadr} className="w-full"
-                onChange={(e) => setCadr(Number(e.target.value))} />
+              <input
+                id="cadr"
+                type="range"
+                min={0}
+                max={600}
+                step={10}
+                value={cadr}
+                className="w-full"
+                onChange={(e) => setCadr(Number(e.target.value))}
+              />
             </div>
             <label className="flex items-center gap-2 text-sm">
-              <input type="checkbox" checked={windowsOpen} onChange={(e) => setWindowsOpen(e.target.checked)} />
+              <input
+                type="checkbox"
+                checked={windowsOpen}
+                onChange={(e) => setWindowsOpen(e.target.checked)}
+              />
               Windows open (ventilating)
             </label>
           </div>
@@ -87,16 +119,31 @@ export default function IndoorPage() {
 
         <div className="grid content-start gap-4">
           <div className="grid gap-4 sm:grid-cols-2">
-            <Stat label="Outdoor PM2.5" value={Math.round(outdoor)} sub="µg/m³ (live)" accent={air?.aqi.color} />
-            <Stat label="Indoor PM2.5" value={model.indoorPm25} sub="µg/m³ (modelled)" accent="#6ee7b7" />
+            <Stat
+              label="Outdoor PM2.5"
+              value={Math.round(outdoor)}
+              sub="µg/m³ (live)"
+              accent={air?.aqi.color}
+            />
+            <Stat
+              label="Indoor PM2.5"
+              value={model.indoorPm25}
+              sub="µg/m³ (modelled)"
+              accent="#6ee7b7"
+            />
             <Stat label="Reduction vs outdoor" value={fmtPercent(model.reductionFraction)} />
-            <Stat label="Clean-air changes/hour" value={model.achFromPurifier} sub="from the purifier" />
+            <Stat
+              label="Clean-air changes/hour"
+              value={model.achFromPurifier}
+              sub="from the purifier"
+            />
           </div>
           <Card className="border-white/10">
             <p className="text-sm text-white/60">
-              Steady-state mass-balance model: indoor PM2.5 = outdoor × (P·a) / (a + k + CADR/Volume), with
-              penetration P, infiltration a and deposition k for a typical dwelling. Close windows when the outdoor
-              AQI is Poor or worse — ventilating then {windowsOpen ? "is raising" : "would raise"} your indoor dose.
+              Steady-state mass-balance model: indoor PM2.5 = outdoor × (P·a) / (a + k +
+              CADR/Volume), with penetration P, infiltration a and deposition k for a typical
+              dwelling. Close windows when the outdoor AQI is Poor or worse — ventilating then{" "}
+              {windowsOpen ? "is raising" : "would raise"} your indoor dose.
             </p>
           </Card>
         </div>
@@ -114,8 +161,8 @@ export default function IndoorPage() {
       <Card>
         <h2 className="text-lg font-bold">🛠️ DIY Corsi-Rosenthal box filter (~₹2,000)</h2>
         <p className="mt-1 text-sm text-white/60">
-          A box fan + four MERV-13/HEPA-grade filters taped into a cube. Community testing shows a CADR comparable to
-          purifiers costing many times more.
+          A box fan + four MERV-13/HEPA-grade filters taped into a cube. Community testing shows a
+          CADR comparable to purifiers costing many times more.
         </p>
         <ol className="mt-4 grid gap-2 text-sm text-white/75">
           {[

@@ -45,7 +45,12 @@ export default function CommunityPage() {
       <div className="grid gap-4 sm:grid-cols-3">
         <Stat label="Your weekly CO₂ avoided" value={`${tally.co2Kg} kg`} accent="#6ee7b7" />
         <Stat label="Your weekly PM2.5 avoided" value={`${tally.pm25Grams} g`} />
-        <Stat label="≈ Trees working for you" value={tally.treeEquivalent} sub="per week equivalent" accent="#6ee7b7" />
+        <Stat
+          label="≈ Trees working for you"
+          value={tally.treeEquivalent}
+          sub="per week equivalent"
+          accent="#6ee7b7"
+        />
       </div>
 
       <Card>
@@ -70,7 +75,12 @@ export default function CommunityPage() {
                     <span className="text-lg font-semibold">
                       <span aria-hidden>{p.emoji}</span> {p.title}
                     </span>
-                    <span className={clsx("pill", on ? "bg-brand-500/20 text-brand-200" : "bg-white/10 text-white/50")}>
+                    <span
+                      className={clsx(
+                        "pill",
+                        on ? "bg-brand-500/20 text-brand-200" : "bg-white/10 text-white/50",
+                      )}
+                    >
                       {on ? "Pledged ✓" : "Add"}
                     </span>
                   </div>
@@ -92,12 +102,15 @@ export default function CommunityPage() {
         <p className="mt-1 text-sm text-white/60">
           {NEIGHBOURHOOD_SEED.families} families on this illustrative street have pledged together.
         </p>
-        <p className="mt-3 text-3xl font-extrabold text-brand-300">{neighbourhoodTotal.toLocaleString()} kg CO₂ / week</p>
+        <p className="mt-3 text-3xl font-extrabold text-brand-300">
+          {neighbourhoodTotal.toLocaleString()} kg CO₂ / week
+        </p>
         <p className="mt-1 text-sm text-white/55">
           avoided collectively — your pledges add {tally.co2Kg} kg to the total.
         </p>
         <p className="mt-3 text-xs text-white/40">
-          Neighbourhood figure is an illustrative demo seed; pledges you pick are stored privately on your device.
+          Neighbourhood figure is an illustrative demo seed; pledges you pick are stored privately
+          on your device.
         </p>
       </Card>
     </div>

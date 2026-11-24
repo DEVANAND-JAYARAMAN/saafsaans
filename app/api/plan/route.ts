@@ -1,7 +1,13 @@
 import { NextResponse } from "next/server";
 import { generateDailyPlan } from "@/lib/gemini";
 import { getAirSnapshot } from "@/lib/airquality";
-import type { CommuteMode, CookingFuel, FamilyMember, HouseholdProfile, PersonaId } from "@/lib/types";
+import type {
+  CommuteMode,
+  CookingFuel,
+  FamilyMember,
+  HouseholdProfile,
+  PersonaId,
+} from "@/lib/types";
 import { PERSONAS } from "@/lib/personas";
 import { COMMUTE_MODES } from "@/lib/health";
 

@@ -15,14 +15,7 @@ export type PersonaId =
 export type ActivityLevel = "rest" | "sedentary" | "light" | "moderate" | "vigorous";
 
 export type CommuteMode =
-  | "walk"
-  | "cycle"
-  | "bike"
-  | "auto"
-  | "bus"
-  | "metro"
-  | "car_fresh"
-  | "car_recirc";
+  "walk" | "cycle" | "bike" | "auto" | "bus" | "metro" | "car_fresh" | "car_recirc";
 
 export type CookingFuel = "lpg" | "induction" | "wood" | "kerosene";
 
@@ -65,13 +58,7 @@ export interface AqiBand {
   label: string;
 }
 
-export type AqiCategory =
-  | "Good"
-  | "Satisfactory"
-  | "Moderate"
-  | "Poor"
-  | "Very Poor"
-  | "Severe";
+export type AqiCategory = "Good" | "Satisfactory" | "Moderate" | "Poor" | "Very Poor" | "Severe";
 
 export interface AirSnapshot {
   latitude: number;

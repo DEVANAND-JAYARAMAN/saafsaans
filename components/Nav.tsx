@@ -24,7 +24,9 @@ export function Nav() {
         className="mx-auto flex w-full max-w-6xl items-center justify-between px-4 py-3 md:px-6"
       >
         <Link href="/" className="flex items-center gap-2 font-extrabold tracking-tight">
-          <span aria-hidden className="text-xl">🌬️</span>
+          <span aria-hidden className="text-xl">
+            🌬️
+          </span>
           <span className="text-lg">
             Saaf<span className="text-brand-400">Saans</span>
           </span>
@@ -64,7 +66,10 @@ export function Nav() {
       </nav>
 
       {open && (
-        <ul id="mobile-menu" className="flex flex-col gap-1 border-t border-white/10 px-4 py-3 md:hidden">
+        <ul
+          id="mobile-menu"
+          className="flex flex-col gap-1 border-t border-white/10 px-4 py-3 md:hidden"
+        >
           {[...LINKS, { href: "/setup", label: "My Household" }].map((l) => (
             <li key={l.href}>
               <Link

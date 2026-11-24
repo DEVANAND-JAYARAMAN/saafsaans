@@ -34,10 +34,24 @@ export function AqiGauge({ aqi, size = 220 }: { aqi: AqiBand; size?: number }) {
           strokeLinecap="round"
           strokeDasharray={`${dash} ${circumference}`}
         />
-        <text x={cx} y={cy - 6} textAnchor="middle" className="fill-white" fontSize="34" fontWeight="800">
+        <text
+          x={cx}
+          y={cy - 6}
+          textAnchor="middle"
+          className="fill-white"
+          fontSize="34"
+          fontWeight="800"
+        >
           {aqi.index}
         </text>
-        <text x={cx} y={cy + 18} textAnchor="middle" fontSize="13" fill={aqi.color} fontWeight="700">
+        <text
+          x={cx}
+          y={cy + 18}
+          textAnchor="middle"
+          fontSize="13"
+          fill={aqi.color}
+          fontWeight="700"
+        >
           {aqi.category}
         </text>
       </svg>

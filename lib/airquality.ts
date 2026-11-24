@@ -86,7 +86,8 @@ export async function getAirSnapshot(
       so2: toNumber(c.sulphur_dioxide),
       o3: toNumber(c.ozone),
       // Open-Meteo reports CO in µg/m³; CPCB sub-index expects mg/m³.
-      co: toNumber(c.carbon_monoxide) !== undefined ? round(c.carbon_monoxide! / 1000, 3) : undefined,
+      co:
+        toNumber(c.carbon_monoxide) !== undefined ? round(c.carbon_monoxide! / 1000, 3) : undefined,
     };
 
     return {
@@ -99,7 +100,8 @@ export async function getAirSnapshot(
       relativeHumidity: toNumber(weather.current?.relative_humidity_2m),
       windSpeedKmh: toNumber(weather.current?.wind_speed_10m),
       source: "Open-Meteo (Copernicus CAMS)",
-      provenance: "Modelled hourly concentrations — indicative AQI estimate, not a roadside regulatory measurement.",
+      provenance:
+        "Modelled hourly concentrations — indicative AQI estimate, not a roadside regulatory measurement.",
       aqi: computeAqi(pollutants),
     };
   } catch {
@@ -120,7 +122,8 @@ export function demoSnapshot(latitude: number, longitude: number, city: string):
     relativeHumidity: 82,
     windSpeedKmh: 4,
     source: "SaafSaans demonstration scenario",
-    provenance: "Offline demo data (severe winter-smog scenario). Not a live or historical observation.",
+    provenance:
+      "Offline demo data (severe winter-smog scenario). Not a live or historical observation.",
     aqi: computeAqi(pollutants),
   };
 }

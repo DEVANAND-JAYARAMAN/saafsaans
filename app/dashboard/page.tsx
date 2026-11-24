@@ -54,8 +54,13 @@ export default function DashboardPage() {
   const pm25 = air?.pollutants.pm2_5 ?? 0;
   const volume = profile ? Math.max(profile.roomAreaSqm * profile.roomHeightM, 1) : 42;
   const indoorNo = indoorPm25({ outdoorPm25: pm25, roomVolumeM3: volume, purifierCadr: 0 });
-  const recommendedCadr = profile && profile.purifierCadr > 0 ? profile.purifierCadr : indoorNo.recommendedCadr;
-  const indoorWith = indoorPm25({ outdoorPm25: pm25, roomVolumeM3: volume, purifierCadr: recommendedCadr });
+  const recommendedCadr =
+    profile && profile.purifierCadr > 0 ? profile.purifierCadr : indoorNo.recommendedCadr;
+  const indoorWith = indoorPm25({
+    outdoorPm25: pm25,
+    roomVolumeM3: volume,
+    purifierCadr: recommendedCadr,
+  });
 
   const ledger =
     profile &&
@@ -69,7 +74,9 @@ export default function DashboardPage() {
 
   const mostSensitive =
     profile &&
-    [...profile.members].sort((a, b) => PERSONAS[b.persona].sensitivity - PERSONAS[a.persona].sensitivity)[0];
+    [...profile.members].sort(
+      (a, b) => PERSONAS[b.persona].sensitivity - PERSONAS[a.persona].sensitivity,
+    )[0];
 
   return (
     <div className="flex flex-col gap-6">
@@ -106,7 +113,9 @@ export default function DashboardPage() {
               </p>
             </>
           ) : (
-            <div className="grid h-48 w-full place-items-center text-white/40">Loading live air…</div>
+            <div className="grid h-48 w-full place-items-center text-white/40">
+              Loading live air…
+            </div>
           )}
         </Card>
 
@@ -133,7 +142,9 @@ export default function DashboardPage() {
 
           {mostSensitive && (
             <Card className="border-brand-500/20 bg-brand-500/5">
-              <p className="text-sm font-semibold uppercase tracking-wide text-brand-300">Protect first</p>
+              <p className="text-sm font-semibold uppercase tracking-wide text-brand-300">
+                Protect first
+              </p>
               <p className="mt-1 text-lg">
                 <strong>{mostSensitive.name || PERSONAS[mostSensitive.persona].label}</strong> —{" "}
                 {PERSONAS[mostSensitive.persona].emoji} {PERSONAS[mostSensitive.persona].label}
@@ -153,7 +164,8 @@ export default function DashboardPage() {
                     {ledger.householdCigarettes} 🚬
                   </p>
                   <p className="text-sm text-white/60">
-                    cigarette-equivalents your household can avoid today ({ledger.householdUg} µg PM2.5).
+                    cigarette-equivalents your household can avoid today ({ledger.householdUg} µg
+                    PM2.5).
                   </p>
                 </div>
                 <Link href="/plan" className="btn-primary whitespace-nowrap">
@@ -173,10 +185,17 @@ export default function DashboardPage() {
             {(Object.keys(POLLUTANT_UNIT) as (keyof Pollutants)[]).map((key) => {
               const value = air.pollutants[key];
               return (
-                <div key={key} className="rounded-xl border border-white/10 bg-black/20 p-3 text-center">
+                <div
+                  key={key}
+                  className="rounded-xl border border-white/10 bg-black/20 p-3 text-center"
+                >
                   <p className="text-xs text-white/50">{pollutantLabel(key)}</p>
-                  <p className="mt-1 text-lg font-bold">{value === undefined ? "—" : Math.round(value * 100) / 100}</p>
-                  <p className="text-xs text-white/40">{value === undefined ? "unavailable" : POLLUTANT_UNIT[key]}</p>
+                  <p className="mt-1 text-lg font-bold">
+                    {value === undefined ? "—" : Math.round(value * 100) / 100}
+                  </p>
+                  <p className="text-xs text-white/40">
+                    {value === undefined ? "unavailable" : POLLUTANT_UNIT[key]}
+                  </p>
                 </div>
               );
             })}
@@ -185,15 +204,40 @@ export default function DashboardPage() {
       )}
 
       <div className="grid gap-4 sm:grid-cols-3">
-        <QuickLink href="/indoor" icon="🏠" title="Clean my indoor air" body="Size a purifier or build a DIY filter." />
-        <QuickLink href="/commute" icon="🚌" title="Pick the cleanest commute" body="Compare inhaled dose by mode." />
-        <QuickLink href="/community" icon="🤝" title="Join the community" body="Pledge and track avoided emissions." />
+        <QuickLink
+          href="/indoor"
+          icon="🏠"
+          title="Clean my indoor air"
+          body="Size a purifier or build a DIY filter."
+        />
+        <QuickLink
+          href="/commute"
+          icon="🚌"
+          title="Pick the cleanest commute"
+          body="Compare inhaled dose by mode."
+        />
+        <QuickLink
+          href="/community"
+          icon="🤝"
+          title="Join the community"
+          body="Pledge and track avoided emissions."
+        />
       </div>
     </div>
   );
 }
 
-function QuickLink({ href, icon, title, body }: { href: string; icon: string; title: string; body: string }) {
+function QuickLink({
+  href,
+  icon,
+  title,
+  body,
+}: {
+  href: string;
+  icon: string;
+  title: string;
+  body: string;
+}) {
   return (
     <Link href={href} className="card transition hover:border-brand-400/40 hover:bg-white/5">
       <div className="text-2xl" aria-hidden>

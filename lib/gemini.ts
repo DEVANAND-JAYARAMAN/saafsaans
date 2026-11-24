@@ -60,7 +60,8 @@ function buildFacts(profile: HouseholdProfile, air: AirSnapshot): GroundingFacts
   const indoorWithPurifier = indoorPm25({
     outdoorPm25: pm25,
     roomVolumeM3: volume,
-    purifierCadr: profile.purifierCadr > 0 ? profile.purifierCadr : indoorNoPurifier.recommendedCadr,
+    purifierCadr:
+      profile.purifierCadr > 0 ? profile.purifierCadr : indoorNoPurifier.recommendedCadr,
   });
 
   const ledger = dailyLedger({
@@ -208,7 +209,8 @@ export function deterministicPlan(
       {
         period: "Morning",
         headline: "Delay outdoor exertion",
-        action: "Shift workouts and outdoor play to indoors, or wait for the wind to pick up after mid-morning.",
+        action:
+          "Shift workouts and outdoor play to indoors, or wait for the wind to pick up after mid-morning.",
         why: "PM2.5 peaks overnight and early morning during winter inversions.",
         impact: `Cutting hard outdoor exertion today saves the household roughly ${facts.ledgerCigarettes} cigarette-equivalents of PM2.5.`,
       },
@@ -222,7 +224,8 @@ export function deterministicPlan(
       {
         period: "Afternoon",
         headline: "Open windows only if wind clears the air",
-        action: "Check the live reading before ventilating; keep windows shut while AQI stays Poor or worse.",
+        action:
+          "Check the live reading before ventilating; keep windows shut while AQI stays Poor or worse.",
         why: `Indoor PM2.5 can sit near ${facts.indoorNow} µg/m³ without mitigation.`,
         impact: `A right-sized purifier (CADR ${facts.recommendedCadr} m³/h) brings indoor PM2.5 down to about ${facts.indoorWithPurifier} µg/m³.`,
       },

@@ -26,7 +26,11 @@ import { clamp, round } from "./format";
 export const UG_PER_CIGARETTE = 440;
 
 /** Inhaled PM2.5 dose in micrograms. */
-export function inhaledDose(concentrationUgM3: number, activity: ActivityLevel, minutes: number): number {
+export function inhaledDose(
+  concentrationUgM3: number,
+  activity: ActivityLevel,
+  minutes: number,
+): number {
   const ventilation = VENTILATION_M3_PER_H[activity];
   const hours = minutes / 60;
   return concentrationUgM3 * ventilation * hours;
@@ -96,12 +100,36 @@ interface ModeProfile {
 const MODE: Record<CommuteMode, ModeProfile> = {
   walk: { label: "Walk", speedKmh: 5, exposureRatio: 1.0, activity: "moderate", emoji: "🚶" },
   cycle: { label: "Cycle", speedKmh: 15, exposureRatio: 1.0, activity: "vigorous", emoji: "🚴" },
-  bike: { label: "Motorbike", speedKmh: 25, exposureRatio: 1.15, activity: "sedentary", emoji: "🏍️" },
-  auto: { label: "Auto-rickshaw", speedKmh: 20, exposureRatio: 1.2, activity: "sedentary", emoji: "🛺" },
+  bike: {
+    label: "Motorbike",
+    speedKmh: 25,
+    exposureRatio: 1.15,
+    activity: "sedentary",
+    emoji: "🏍️",
+  },
+  auto: {
+    label: "Auto-rickshaw",
+    speedKmh: 20,
+    exposureRatio: 1.2,
+    activity: "sedentary",
+    emoji: "🛺",
+  },
   bus: { label: "Bus", speedKmh: 18, exposureRatio: 0.9, activity: "sedentary", emoji: "🚌" },
   metro: { label: "Metro", speedKmh: 32, exposureRatio: 0.75, activity: "sedentary", emoji: "🚇" },
-  car_fresh: { label: "Car (windows/fresh air)", speedKmh: 24, exposureRatio: 0.85, activity: "sedentary", emoji: "🚗" },
-  car_recirc: { label: "Car (recirc + cabin filter)", speedKmh: 24, exposureRatio: 0.4, activity: "sedentary", emoji: "🚙" },
+  car_fresh: {
+    label: "Car (windows/fresh air)",
+    speedKmh: 24,
+    exposureRatio: 0.85,
+    activity: "sedentary",
+    emoji: "🚗",
+  },
+  car_recirc: {
+    label: "Car (recirc + cabin filter)",
+    speedKmh: 24,
+    exposureRatio: 0.4,
+    activity: "sedentary",
+    emoji: "🚙",
+  },
 };
 
 export const COMMUTE_MODES = Object.keys(MODE) as CommuteMode[];
@@ -117,7 +145,11 @@ export interface CommuteResult {
 }
 
 /** Compute inhaled PM2.5 for a single commute mode over a given distance. */
-export function commuteExposure(mode: CommuteMode, ambientPm25: number, distanceKm: number): CommuteResult {
+export function commuteExposure(
+  mode: CommuteMode,
+  ambientPm25: number,
+  distanceKm: number,
+): CommuteResult {
   const profile = MODE[mode];
   const minutes = (distanceKm / profile.speedKmh) * 60;
   const inCabin = ambientPm25 * profile.exposureRatio;
@@ -183,7 +215,11 @@ export function dailyLedger(input: LedgerInput): LedgerResult {
   // Indoor portion: baseline assumes outdoor-equivalent indoor air (no mitigation),
   // guided assumes the modelled, filtered indoor concentration for 14 waking indoor hours.
   const indoorHoursMinutes = 14 * 60 - input.outdoorMinutesGuided;
-  const baselineIndoor = inhaledDose(input.outdoorPm25, "sedentary", 14 * 60 - input.outdoorMinutesBaseline);
+  const baselineIndoor = inhaledDose(
+    input.outdoorPm25,
+    "sedentary",
+    14 * 60 - input.outdoorMinutesBaseline,
+  );
   const guidedIndoor = inhaledDose(input.indoorPm25, "sedentary", Math.max(indoorHoursMinutes, 0));
 
   const perPerson = baselineOutdoor + baselineIndoor - (guidedOutdoor + guidedIndoor);

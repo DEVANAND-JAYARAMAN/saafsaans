@@ -40,8 +40,18 @@ describe("indoor mass-balance model", () => {
   });
 
   it("open windows during smog increases indoor concentration vs sealed", () => {
-    const sealed = indoorPm25({ outdoorPm25: 200, roomVolumeM3: 42, purifierCadr: 0, windowsOpen: false });
-    const open = indoorPm25({ outdoorPm25: 200, roomVolumeM3: 42, purifierCadr: 0, windowsOpen: true });
+    const sealed = indoorPm25({
+      outdoorPm25: 200,
+      roomVolumeM3: 42,
+      purifierCadr: 0,
+      windowsOpen: false,
+    });
+    const open = indoorPm25({
+      outdoorPm25: 200,
+      roomVolumeM3: 42,
+      purifierCadr: 0,
+      windowsOpen: true,
+    });
     expect(open.indoorPm25).toBeGreaterThan(sealed.indoorPm25);
   });
 });

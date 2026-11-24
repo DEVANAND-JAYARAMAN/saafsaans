@@ -102,11 +102,36 @@ export function subIndex(pollutant: keyof Pollutants, concentration: number): nu
 
 const CATEGORY_META: { max: number; category: AqiCategory; color: string; label: string }[] = [
   { max: 50, category: "Good", color: "#4caf50", label: "Minimal impact." },
-  { max: 100, category: "Satisfactory", color: "#a3c853", label: "Minor breathing discomfort for sensitive people." },
-  { max: 200, category: "Moderate", color: "#f6d242", label: "Breathing discomfort for people with lung/heart disease." },
-  { max: 300, category: "Poor", color: "#f99a1c", label: "Breathing discomfort for most on prolonged exposure." },
-  { max: 400, category: "Very Poor", color: "#e63946", label: "Respiratory illness on prolonged exposure." },
-  { max: 500, category: "Severe", color: "#8e24aa", label: "Serious impact even for healthy people." },
+  {
+    max: 100,
+    category: "Satisfactory",
+    color: "#a3c853",
+    label: "Minor breathing discomfort for sensitive people.",
+  },
+  {
+    max: 200,
+    category: "Moderate",
+    color: "#f6d242",
+    label: "Breathing discomfort for people with lung/heart disease.",
+  },
+  {
+    max: 300,
+    category: "Poor",
+    color: "#f99a1c",
+    label: "Breathing discomfort for most on prolonged exposure.",
+  },
+  {
+    max: 400,
+    category: "Very Poor",
+    color: "#e63946",
+    label: "Respiratory illness on prolonged exposure.",
+  },
+  {
+    max: 500,
+    category: "Severe",
+    color: "#8e24aa",
+    label: "Serious impact even for healthy people.",
+  },
 ];
 
 export function categorize(index: number): { category: AqiCategory; color: string; label: string } {
@@ -131,7 +156,13 @@ export function computeAqi(pollutants: Pollutants): AqiBand {
     }
   });
   if (worst < 0) {
-    return { index: 0, category: "Good", dominant: null, color: "#9aa4b2", label: "No data available." };
+    return {
+      index: 0,
+      category: "Good",
+      dominant: null,
+      color: "#9aa4b2",
+      label: "No data available.",
+    };
   }
   const meta = categorize(worst);
   return { index: worst, category: meta.category, dominant, color: meta.color, label: meta.label };

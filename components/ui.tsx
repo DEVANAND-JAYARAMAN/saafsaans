@@ -46,7 +46,9 @@ export function SectionTitle({
   return (
     <header className="mb-5">
       {kicker && (
-        <p className="mb-1 text-sm font-semibold uppercase tracking-wide text-brand-400">{kicker}</p>
+        <p className="mb-1 text-sm font-semibold uppercase tracking-wide text-brand-400">
+          {kicker}
+        </p>
       )}
       <h1 className="text-2xl font-bold md:text-3xl">{title}</h1>
       {description && <p className="mt-2 max-w-2xl text-white/60">{description}</p>}

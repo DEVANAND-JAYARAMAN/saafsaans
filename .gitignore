@@ -35,3 +35,8 @@ next-env.d.ts
 .vscode/*
 !.vscode/extensions.json
 .idea
+
+# media (upload demo videos to YouTube/Drive, not the repo)
+*.mp4
+*.mov
+*.webm

@@ -83,8 +83,8 @@ export default function PlanPage() {
             <p className="mt-1 text-white/70">{plan.riskSummary}</p>
             {plan.engine === "deterministic" && (
               <p className="mt-3 rounded-lg bg-black/25 px-3 py-2 text-xs text-white/50">
-                Running the transparent fallback engine (no Gemini key set). Numbers are identical — only the
-                phrasing is templated. Add a GEMINI_API_KEY to unlock AI narration.
+                Running the transparent fallback engine (no Gemini key set). Numbers are identical —
+                only the phrasing is templated. Add a GEMINI_API_KEY to unlock AI narration.
               </p>
             )}
           </Card>
@@ -94,7 +94,9 @@ export default function PlanPage() {
               <li key={`${b.period}-${i}`}>
                 <Card>
                   <div className="flex items-baseline justify-between gap-3">
-                    <p className="text-sm font-semibold uppercase tracking-wide text-brand-400">{b.period}</p>
+                    <p className="text-sm font-semibold uppercase tracking-wide text-brand-400">
+                      {b.period}
+                    </p>
                   </div>
                   <h2 className="mt-1 text-lg font-bold">{b.headline}</h2>
                   <p className="mt-1 text-white/80">{b.action}</p>

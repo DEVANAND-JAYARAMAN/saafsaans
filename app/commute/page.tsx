@@ -45,8 +45,15 @@ export default function CommutePage() {
         <label className="label" htmlFor="km">
           Trip distance (one way): {km} km
         </label>
-        <input id="km" type="range" min={1} max={40} value={km} className="w-full"
-          onChange={(e) => setKm(Number(e.target.value))} />
+        <input
+          id="km"
+          type="range"
+          min={1}
+          max={40}
+          value={km}
+          className="w-full"
+          onChange={(e) => setKm(Number(e.target.value))}
+        />
         <p className="mt-2 text-sm text-white/55">
           Live ambient PM2.5: <strong>{Math.round(pm25)} µg/m³</strong>
           {air ? ` · ${air.city}` : ""}
@@ -65,7 +72,9 @@ export default function CommutePage() {
             </p>
           </Card>
           <Card className="border-aqi-verypoor/40">
-            <p className="text-sm font-semibold uppercase tracking-wide text-aqi-verypoor">Most polluting</p>
+            <p className="text-sm font-semibold uppercase tracking-wide text-aqi-verypoor">
+              Most polluting
+            </p>
             <p className="mt-1 text-xl font-bold">
               {dirtiest.emoji} {dirtiest.label}
             </p>
@@ -79,13 +88,23 @@ export default function CommutePage() {
       <Card>
         <h2 className="text-lg font-bold">Inhaled PM2.5 by mode</h2>
         <table className="mt-4 w-full border-collapse text-sm">
-          <caption className="sr-only">Inhaled PM2.5 dose and cigarette-equivalents for each commute mode</caption>
+          <caption className="sr-only">
+            Inhaled PM2.5 dose and cigarette-equivalents for each commute mode
+          </caption>
           <thead>
             <tr className="text-left text-white/50">
-              <th scope="col" className="py-2">Mode</th>
-              <th scope="col" className="py-2">Time</th>
-              <th scope="col" className="py-2 pr-2 text-right">Dose (µg)</th>
-              <th scope="col" className="w-1/2 py-2">Relative</th>
+              <th scope="col" className="py-2">
+                Mode
+              </th>
+              <th scope="col" className="py-2">
+                Time
+              </th>
+              <th scope="col" className="py-2 pr-2 text-right">
+                Dose (µg)
+              </th>
+              <th scope="col" className="w-1/2 py-2">
+                Relative
+              </th>
             </tr>
           </thead>
           <tbody>
@@ -103,7 +122,8 @@ export default function CommutePage() {
                       className="h-3 rounded-full"
                       style={{
                         width: `${Math.max((r.doseUg / maxDose) * 100, 4)}%`,
-                        background: i === 0 ? "#4caf50" : i === ranked.length - 1 ? "#e63946" : "#f6d242",
+                        background:
+                          i === 0 ? "#4caf50" : i === ranked.length - 1 ? "#e63946" : "#f6d242",
                       }}
                       aria-hidden
                     />
@@ -115,9 +135,9 @@ export default function CommutePage() {
           </tbody>
         </table>
         <p className="mt-3 text-xs text-white/45">
-          Dose = in-cabin PM2.5 × breathing rate × time. Active modes (walk, cycle) carry extra dose from higher
-          ventilation; recirculating cars and the metro cut in-cabin concentration. An illustrative comparison, not
-          turn-by-turn routing.
+          Dose = in-cabin PM2.5 × breathing rate × time. Active modes (walk, cycle) carry extra dose
+          from higher ventilation; recirculating cars and the metro cut in-cabin concentration. An
+          illustrative comparison, not turn-by-turn routing.
         </p>
       </Card>
     </div>

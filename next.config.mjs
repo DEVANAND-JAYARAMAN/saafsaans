@@ -2,8 +2,6 @@
 const nextConfig = {
   reactStrictMode: true,
   poweredByHeader: false,
-  // Lint is available via `npm run lint`; we don't gate production builds on it.
-  eslint: { ignoreDuringBuilds: true },
   async headers() {
     const isDev = process.env.NODE_ENV !== "production";
 

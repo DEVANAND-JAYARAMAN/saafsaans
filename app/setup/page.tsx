@@ -157,8 +157,8 @@ export default function SetupPage() {
           </ul>
         )}
         <p className="mt-3 text-sm text-white/50">
-          Selected: <strong className="text-white/80">{form.city}</strong> ({form.latitude.toFixed(2)},{" "}
-          {form.longitude.toFixed(2)})
+          Selected: <strong className="text-white/80">{form.city}</strong> (
+          {form.latitude.toFixed(2)}, {form.longitude.toFixed(2)})
         </p>
       </Card>
 
@@ -170,7 +170,8 @@ export default function SetupPage() {
           </button>
         </div>
         <p className="mt-1 text-sm text-white/55">
-          Personas set each person&apos;s vulnerability weighting (children, seniors and patients feel smog more).
+          Personas set each person&apos;s vulnerability weighting (children, seniors and patients
+          feel smog more).
         </p>
         <ul className="mt-4 grid gap-3">
           {form.members.map((m, idx) => (
@@ -206,7 +207,12 @@ export default function SetupPage() {
                 type="button"
                 className="btn-ghost text-sm"
                 aria-label={`Remove member ${idx + 1}`}
-                onClick={() => set("members", form.members.filter((_, i) => i !== idx))}
+                onClick={() =>
+                  set(
+                    "members",
+                    form.members.filter((_, i) => i !== idx),
+                  )
+                }
                 disabled={form.members.length <= 1}
               >
                 ✕
