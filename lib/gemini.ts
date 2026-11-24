@@ -143,36 +143,50 @@ Family: ${profile.members.map((m) => `${m.name} [${PERSONAS[m.persona].label}]`)
 Produce a JSON daily plan with morning/afternoon/evening/night blocks plus indoor hacks and sustainable swaps. Weave the family members' names in naturally.`;
 }
 
+/**
+ * Candidate models, tried in order. "lite" aliases are listed as resilient
+ * fallbacks because the full-flash tiers can return transient 503 "high demand"
+ * errors on the free tier. Aliases (…-latest) never 404 when the underlying
+ * model is retired, so the app keeps working long after submission.
+ */
+function modelCandidates(): string[] {
+  const configured = process.env.GEMINI_MODEL?.trim();
+  const defaults = ["gemini-flash-lite-latest", "gemini-flash-latest", "gemini-3.5-flash-lite"];
+  const list = configured ? [configured, ...defaults] : defaults;
+  return [...new Set(list)];
+}
+
 export async function generateDailyPlan(
   profile: HouseholdProfile,
   air: AirSnapshot,
 ): Promise<DailyPlan> {
   const facts = buildFacts(profile, air);
   const apiKey = process.env.GEMINI_API_KEY;
-  const model = process.env.GEMINI_MODEL || "gemini-2.5-flash";
-
   if (!apiKey) return deterministicPlan(facts, profile);
 
-  try {
-    const ai = new GoogleGenAI({ apiKey });
-    const response = await ai.models.generateContent({
-      model,
-      contents: factPrompt(facts, profile),
-      config: {
-        systemInstruction: SYSTEM_INSTRUCTION,
-        responseMimeType: "application/json",
-        responseSchema: planSchema,
-        temperature: 0.7,
-        maxOutputTokens: 2048,
-      },
-    });
-    const text = response.text;
-    if (!text) throw new Error("empty model response");
-    const parsed = JSON.parse(text) as Omit<DailyPlan, "engine" | "model">;
-    return { ...parsed, engine: "gemini", model };
-  } catch {
-    return deterministicPlan(facts, profile);
+  const ai = new GoogleGenAI({ apiKey });
+  const contents = factPrompt(facts, profile);
+  const config = {
+    systemInstruction: SYSTEM_INSTRUCTION,
+    responseMimeType: "application/json",
+    responseSchema: planSchema,
+    temperature: 0.7,
+    maxOutputTokens: 2048,
+  } as const;
+
+  for (const model of modelCandidates()) {
+    try {
+      const response = await ai.models.generateContent({ model, contents, config });
+      const text = response.text;
+      if (!text) continue;
+      const parsed = JSON.parse(text) as Omit<DailyPlan, "engine" | "model">;
+      return { ...parsed, engine: "gemini", model };
+    } catch {
+      // Try the next candidate (e.g. on 503/404) before giving up.
+    }
   }
+
+  return deterministicPlan(facts, profile);
 }
 
 /** Transparent deterministic fallback — always truthful, always available. */
