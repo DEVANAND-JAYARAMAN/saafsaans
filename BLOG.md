@@ -92,8 +92,8 @@ household's threshold, and OpenAQ ground-station data where a sensor is nearby.
 
 ## Try it
 
-- **Live demo:** _add your Vercel URL_
-- **Code:** _add your GitHub URL_
+- **Live demo:** https://saafsaans-sepia.vercel.app
+- **Code:** https://github.com/DEVANAND-JAYARAMAN/saafsaans
 - Run `npm run verify` to see the typecheck, tests and build pass end-to-end.
 
 SaafSaans is a small app with one strong opinion: air-quality advice should come

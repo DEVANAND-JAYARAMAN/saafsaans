@@ -9,8 +9,9 @@ household's **location and lifestyle** — and, crucially, it **shows the direct
 impact of every choice** in numbers you can check: micrograms of PM2.5 avoided
 and cigarette-equivalents.
 
-**Live demo:** _add your Vercel URL here_
-**Tech:** Next.js 15 (App Router) · TypeScript (strict) · Tailwind CSS �� Google Gemini · Open-Meteo (Copernicus CAMS)
+**🔗 Live demo:** https://saafsaans-sepia.vercel.app
+**💻 Code:** https://github.com/DEVANAND-JAYARAMAN/saafsaans
+**Tech:** Next.js 15 (App Router) · TypeScript (strict) · Tailwind CSS · Google Gemini · Open-Meteo (Copernicus CAMS)
 
 ---
 

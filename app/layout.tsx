@@ -4,7 +4,7 @@ import { Nav } from "@/components/Nav";
 import { Footer } from "@/components/Footer";
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://saafsaans.vercel.app"),
+  metadataBase: new URL("https://saafsaans-sepia.vercel.app"),
   title: {
     default: "SaafSaans — Clean breath for every family",
     template: "%s · SaafSaans",
