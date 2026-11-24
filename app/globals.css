@@ -1,0 +1,82 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --font-sans: "Segoe UI", system-ui, -apple-system, "Helvetica Neue", Arial, sans-serif;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background: radial-gradient(1200px 600px at 80% -10%, #0e1b33 0%, #0b1220 45%, #080d18 100%);
+  color: #e8edf5;
+  font-family: var(--font-sans);
+  min-height: 100vh;
+}
+
+/* Accessible focus ring for keyboard users across all interactive elements. */
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible,
+[tabindex]:focus-visible {
+  outline: 3px solid #6ee7b7;
+  outline-offset: 2px;
+  border-radius: 6px;
+}
+
+/* Skip link revealed on focus. */
+.skip-link {
+  position: absolute;
+  left: -999px;
+  top: 0;
+  z-index: 100;
+  background: #10b981;
+  color: #04121f;
+  padding: 0.6rem 1rem;
+  font-weight: 700;
+  border-radius: 0 0 8px 0;
+}
+.skip-link:focus {
+  left: 0;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+@layer components {
+  .card {
+    @apply rounded-2xl border border-white/10 bg-ink-soft/70 p-5 shadow-card backdrop-blur;
+  }
+  .btn {
+    @apply inline-flex items-center justify-center gap-2 rounded-xl px-4 py-2.5 font-semibold transition
+      focus-visible:outline-none disabled:cursor-not-allowed disabled:opacity-50;
+  }
+  .btn-primary {
+    @apply btn bg-brand-500 text-ink hover:bg-brand-400;
+  }
+  .btn-ghost {
+    @apply btn border border-white/15 text-white hover:bg-white/5;
+  }
+  .field {
+    @apply w-full rounded-xl border border-white/15 bg-black/20 px-3 py-2.5 text-white
+      placeholder:text-white/40 focus:border-brand-400 focus-visible:outline-none;
+  }
+  .label {
+    @apply mb-1.5 block text-sm font-medium text-white/70;
+  }
+  .pill {
+    @apply inline-flex items-center gap-1.5 rounded-full px-3 py-1 text-xs font-semibold;
+  }
+}
